@@ -1,0 +1,18 @@
+body {
+  background-color: #fff0f5;
+  font-family: 'Pacifico', cursive;
+  color: #333;
+}
+
+.side-menu {
+  background-color: #ffe0f0;
+  border-radius: 0 20px 20px 0;
+}
+
+.menu-btn {
+  background: #ffd6e8;
+  border-radius: 15px;
+  font-size: 1em;
+}
+
+/* And all the rest for pastel colors, rounded corners, etc. */
