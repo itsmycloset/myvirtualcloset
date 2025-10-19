@@ -1,0 +1,47 @@
+// outfit.js - handles saving outfits and weather-based suggestions
+
+const saveLookBtn = document.getElementById('saveLookBtn');
+const suggestionBox = document.getElementById('suggestionBox');
+
+saveLookBtn.addEventListener('click', () => {
+    const outfit = layers.map(l => l.img.src);
+    let savedOutfits = JSON.parse(localStorage.getItem('savedOutfits') || '[]');
+    savedOutfits.push({outfit, date: new Date()});
+    localStorage.setItem('savedOutfits', JSON.stringify(savedOutfits));
+    alert('Outfit saved!');
+});
+
+const suggestBtn = document.getElementById('suggestBtn');
+suggestBtn.addEventListener('click', () => {
+    if (clothesList.length === 0) {
+        suggestionBox.textContent = 'Upload some clothes first!';
+        return;
+    }
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(async (position) => {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            const apiKey = 'YOUR_API_KEY_HERE'; // Replace with your OpenWeatherMap API key
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`;
+
+            const response = await fetch(url);
+            const data = await response.json();
+            const temp = data.main.temp;
+
+            let suitableClothes = clothesList.filter(c => {
+                if (temp < 10) return c.details.type.toLowerCase().includes('coat') || c.details.type.toLowerCase().includes('sweater');
+                else if (temp < 20) return c.details.type.toLowerCase().includes('long') || c.details.type.toLowerCase().includes('shirt');
+                else return !c.details.type.toLowerCase().includes('coat');
+            });
+
+            const selection = suitableClothes[Math.floor(Math.random() * suitableClothes.length)];
+            suggestionBox.textContent = selection
+                ? `Try wearing: ${selection.details.type}, ${selection.details.color}`
+                : 'No suitable outfit found for current weather!';
+        });
+    } else {
+        suggestionBox.textContent = 'Geolocation not supported by your browser.';
+    }
+});

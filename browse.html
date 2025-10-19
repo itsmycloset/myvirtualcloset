@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Browse Clothes - My Virtual Closet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="side-menu">
+    <div class="logo">My Virtual Closet</div>
+    <button class="menu-btn" onclick="navigate('index.html')">Try-On</button>
+    <button class="menu-btn" onclick="navigate('browse.html')">Browse Clothes</button>
+    <button class="menu-btn" onclick="navigate('saved.html')">Saved Outfits</button>
+    <button class="menu-btn" onclick="navigate('profile.html')">Profile</button>
+  </nav>
+  <main class="main-content">
+    <header>
+      <h1>Browse All Your Clothes</h1>
+    </header>
+    <section class="clothes-gallery" id="clothesGallery"></section>
+  </main>
+
+  <script src="js/clothes.js"></script>
+  <script>
+    function navigate(url){ window.location.href=url; }
+
+    const gallery = document.getElementById('clothesGallery');
+    function updateGallery(){
+      gallery.innerHTML = '';
+      if (typeof clothesList !== 'undefined') {
+        clothesList.forEach(cloth => {
+          const div = document.createElement('div');
+          div.className = 'clothes-thumb';
+          div.style.backgroundImage = `url(${cloth.img.src})`;
+          div.onclick = () => {
+            alert(`Type: ${cloth.details.type}\nSize: ${cloth.details.size}\nFit: ${cloth.details.fit}\nColor: ${cloth.details.color}\nSeason: ${cloth.details.season}\nMaterial: ${cloth.details.material}\nStyle: ${cloth.details.style}\nNotes: ${cloth.details.notes}`);
+          };
+          gallery.appendChild(div);
+        });
+      }
+    }
+    updateGallery();
+  </script>
+</body>
+</html>

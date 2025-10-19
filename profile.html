@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile - My Virtual Closet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="side-menu">
+    <div class="logo">My Virtual Closet</div>
+    <button class="menu-btn" onclick="navigate('index.html')">Try-On</button>
+    <button class="menu-btn" onclick="navigate('browse.html')">Browse Clothes</button>
+    <button class="menu-btn" onclick="navigate('saved.html')">Saved Outfits</button>
+    <button class="menu-btn" onclick="navigate('profile.html')">Profile</button>
+  </nav>
+  <main class="main-content">
+    <header>
+      <h1>User Profile</h1>
+    </header>
+    <section class="profile-section">
+      <label>Upload Avatar:</label>
+      <input type="file" id="profileAvatar" accept="image/*">
+      <div id="avatarPreview"></div>
+
+      <label>Background Theme:</label>
+      <select id="bgTheme">
+        <option value="#fceef4">Soft Pink</option>
+        <option value="#e0f7fa">Soft Blue</option>
+        <option value="#fff3e0">Soft Orange</option>
+        <option value="#f3e5f5">Soft Purple</option>
+      </select>
+      <button id="saveProfile">Save Profile</button>
+    </section>
+  </main>
+
+  <script>
+    function navigate(url){ window.location.href=url; }
+
+    const profileAvatar = document.getElementById('profileAvatar');
+    const avatarPreview = document.getElementById('avatarPreview');
+    const bgTheme = document.getElementById('bgTheme');
+    const saveProfile = document.getElementById('saveProfile');
+
+    profileAvatar.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if(!file) return;
+      const img = new Image();
+      img.onload = () => {
+        avatarPreview.innerHTML = '';
+        img.style.width = '150px';
+        img.style.borderRadius = '50%';
+        avatarPreview.appendChild(img);
+      };
+      img.src = URL.createObjectURL(file);
+    });
+
+    saveProfile.addEventListener('click', () => {
+      const profile = {
+        avatar: profileAvatar.files[0] ? URL.createObjectURL(profileAvatar.files[0]) : null,
+        theme: bgTheme.value
+      };
+      localStorage.setItem('userProfile', JSON.stringify(profile));
+      alert('Profile saved!');
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Virtual Closet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="side-menu">
+    <div class="logo">My Virtual Closet</div>
+    <button class="menu-btn" onclick="navigate('index.html')">Try-On</button>
+    <button class="menu-btn" onclick="navigate('browse.html')">Browse Clothes</button>
+    <button class="menu-btn" onclick="navigate('saved.html')">Saved Outfits</button>
+    <button class="menu-btn" onclick="navigate('profile.html')">Profile</button>
+  </nav>
+  <main class="main-content">
+    <header>
+      <h1>Don't know what to wear? Your virtual closet will help you decide!</h1>
+    </header>
+    <section class="try-on-section">
+      <canvas id="avatarCanvas"></canvas>
+      <div class="controls">
+        <input type="file" id="avatarUpload" accept="image/*">
+        <input type="file" id="clothesUpload" accept="image/*" multiple>
+        <button id="suggestBtn">Suggest Outfit</button>
+        <button id="saveLookBtn">Save Outfit</button>
+      </div>
+      <div class="clothes-thumbnails" id="clothesThumbnails"></div>
+      <div class="suggestion-box" id="suggestionBox">Your outfit suggestion will appear here.</div>
+    </section>
+  </main>
+  <script src="js/main.js"></script>
+  <script src="js/clothes.js"></script>
+  <script src="js/outfit.js"></script>
+  <script>
+    function navigate(url){ window.location.href=url; }
+  </script>
+</body>
+</html>

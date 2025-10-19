@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saved Outfits - My Virtual Closet</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+</head>
+<body>
+  <nav class="side-menu">
+    <div class="logo">My Virtual Closet</div>
+    <button class="menu-btn" onclick="navigate('index.html')">Try-On</button>
+    <button class="menu-btn" onclick="navigate('browse.html')">Browse Clothes</button>
+    <button class="menu-btn" onclick="navigate('saved.html')">Saved Outfits</button>
+    <button class="menu-btn" onclick="navigate('profile.html')">Profile</button>
+  </nav>
+  <main class="main-content">
+    <header>
+      <h1>Saved Outfits</h1>
+    </header>
+    <section class="saved-outfits" id="savedOutfitsContainer"></section>
+  </main>
+
+  <script src="js/outfit.js"></script>
+  <script>
+    function navigate(url){ window.location.href=url; }
+
+    const container = document.getElementById('savedOutfitsContainer');
+    function loadSavedOutfits(){
+      container.innerHTML = '';
+      let savedOutfits = JSON.parse(localStorage.getItem('savedOutfits') || '[]');
+      savedOutfits.forEach((o, i) => {
+        const div = document.createElement('div');
+        div.className = 'clothes-thumb';
+        div.style.background = '#ffe0f0';
+        div.style.border = '2px solid #ffd6e8';
+        div.style.padding = '10px';
+        div.style.borderRadius = '15px';
+        const imgs = o.outfit.map(src => `<img src='${src}' style='width:50px;margin:2px'>`).join('');
+        div.innerHTML = `<strong>Outfit ${i+1}</strong><br>${imgs}<br><button onclick='editOutfit(${i})'>Edit</button>`;
+        container.appendChild(div);
+      });
+    }
+
+    function editOutfit(index){
+      alert('Editing outfit ' + (index+1) + ' feature coming soon.');
+    }
+
+    loadSavedOutfits();
+  </script>
+</body>
+</html>
